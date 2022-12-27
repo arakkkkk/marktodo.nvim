@@ -1,5 +1,6 @@
 local pickers = require("telescope.pickers")
-local previewers = require('telescope.previewers')
+local themes = require("telescope.themes")
+local previewers = require("telescope.previewers")
 local entry_display = require("telescope.pickers.entry_display")
 local finders = require("telescope.finders")
 local actions = require("telescope.actions")
@@ -38,9 +39,10 @@ local function getColumnWidth(parsers, label, max_width)
 end
 
 return function(parsers, opts)
-	opts = opts or {}
-	-- local themes = require("telescope.themes")
-	-- opts = themes.get_dropdown()
+	opts = opts or {
+		layout_strategy = "vertical",
+		layout_config = { height = 0.8, width = 0.8 },
+	}
 
 	local widths = {}
 	for _, v in pairs(getSortedColumns()) do
@@ -74,6 +76,7 @@ return function(parsers, opts)
 					parser.ordinal = parser.description
 					parser.display = make_display
 					parser.path = parser.file_path
+					parser.lnum = parser.line_number
 					return parser
 				end,
 			}),
@@ -81,13 +84,14 @@ return function(parsers, opts)
 				actions.select_default:replace(function()
 					actions.close(prompt_bufnr)
 					local parser = action_state.get_selected_entry()
-					vim.cmd(":e "..parser.file_path)
-					vim.cmd(":"..parser.line_number)
+					vim.cmd(":e " .. parser.file_path)
+					vim.cmd(":" .. parser.line_number)
 				end)
 				return true
 			end,
 			sorter = conf.generic_sorter(opts),
-			previewer = true and conf.file_previewer {} or nil,
+			-- previewer = conf.file_previewer({}),
+			previewer = require('telescope.config').values.grep_previewer({})
 		})
 		:find()
 end
