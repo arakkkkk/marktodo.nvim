@@ -14,12 +14,13 @@ local function split(str, seq, max_count)
 	return tab
 end
 
-return function(path, pattern, ops)
+return function(path, pattern, ops, exclude_ops)
+	exclude_ops = exclude_ops or ""
 	local res_table = {}
 	pattern = pattern:gsub("%%", "\\")
 	pattern = pattern:gsub("^-", "\\-")
 	pattern = pattern:gsub(" ", "\\s")
-	local handle = io.popen("rg " .. ops .. " '" .. pattern .. "' --no-heading -H --vimgrep " .. "'" .. path .. "'")
+	local handle = io.popen("rg " .. ops .. " '" .. pattern .. "' --no-heading -H --vimgrep " .. "'" .. path .. "' " .. exclude_ops)
 	assert(handle)
 	local io_output = handle:read("*a")
 	for line in io_output:gmatch("([^\n]*)\n?") do

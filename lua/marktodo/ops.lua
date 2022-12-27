@@ -3,6 +3,7 @@ local M = {}
 function M.get_ops(options)
 	local ops = {
 		sort = { "priority" }, -- priority, is available
+		-- exclude_ops = "-g '!./**/.md'",
 		only_top_level_tasks = true,
 		telescope = true, -- Only true is supported now.
 		telescope_width = vim.o.columns * 0.8,
