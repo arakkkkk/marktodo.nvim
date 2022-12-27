@@ -7,14 +7,18 @@ You can search todo written by [todotxt](https://ericasadun.com/2019/11/13/light
 ## Instration
 Using packer
 ```
-use 'arakkkkk/marktodo.nvim'
-use 'nvim-telescope/telescope.nvim'
+use({
+	"/arakkkkk/marktodo.nvim",
+	config = function()
+		require("marktodo").setup()
+	end,
+})
 ```
 
 ## Usage
 
 ### Create ToDo
-```md
+```
 1---- 2-- 3--------- 4--------- 5-----------------------------------------------------
 - [x] (A) 2022-12-27 2022-12-26 sample todo @context +Project due:2022-12-27 tag:value
                                             6------- 7------- 8------------- 8--------
@@ -30,12 +34,7 @@ use 'nvim-telescope/telescope.nvim'
 
 ## Search todo with nvim-telescope
 ```
-use({
-	"/arakkkkk/marktodo.nvim",
-	config = function()
-		require("marktodo").setup()
-	end,
-})
+:Marktodo
 ```
 
 ### Issues

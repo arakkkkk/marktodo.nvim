@@ -1,4 +1,5 @@
 local pickers = require("telescope.pickers")
+local previewers = require('telescope.previewers')
 local entry_display = require("telescope.pickers.entry_display")
 local finders = require("telescope.finders")
 local actions = require("telescope.actions")
@@ -72,18 +73,21 @@ return function(parsers, opts)
 					parser.value = parser.description
 					parser.ordinal = parser.description
 					parser.display = make_display
+					parser.path = parser.file_path
 					return parser
 				end,
 			}),
 			attach_mappings = function(prompt_bufnr, map)
 				actions.select_default:replace(function()
 					actions.close(prompt_bufnr)
-					local selection = action_state.get_selected_entry()
-					print(selection.value)
+					local parser = action_state.get_selected_entry()
+					vim.cmd(":e "..parser.file_path)
+					vim.cmd(":"..parser.line_number)
 				end)
 				return true
 			end,
 			sorter = conf.generic_sorter(opts),
+			previewer = true and conf.file_previewer {} or nil,
 		})
 		:find()
 end
