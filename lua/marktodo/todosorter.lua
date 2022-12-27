@@ -6,12 +6,7 @@ function M.sort(parsers)
 		if type(or_head_parser[target]) ~= "string" then
 			return false
 		end
-		if
-			or_head_parser[target] == nil
-			or or_head_parser[target] == ""
-			or compare_parser[target] == nil
-			or compare_parser[target] == ""
-		then
+		if or_head_parser[target] == "" then
 			return false
 		end
 		if target == "priority" then
