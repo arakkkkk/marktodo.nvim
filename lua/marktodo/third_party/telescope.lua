@@ -54,13 +54,29 @@ return function(parsers, opts)
 		items = widths,
 	})
 
+	-- local make_display = function(parser)
+	-- 	local displayers = {}
+	-- 	for _, v in pairs(getSortedColumns()) do
+	-- 		if type(parser[v.label]) == "string" then
+	-- 			table.insert(displayers, parser[v.label])
+	-- 		else
+	-- 			table.insert(displayers, table.concat(parser[v.label], ","))
+	-- 		end
+	-- 	end
+	-- 	return displayer(displayers)
+	-- end
+
 	local make_display = function(parser)
 		local displayers = {}
 		for _, v in pairs(getSortedColumns()) do
-			if type(parser[v.label]) == "string" then
+			if v.label == "file_path" then
+				table.insert(displayers, parser[v.label]:sub(#vim.fn.getcwd()+2, #parser[v.label]))
+			elseif type(parser[v.label]) == "string" then
 				table.insert(displayers, parser[v.label])
-			else
+			elseif type(parser[v.label]) == "table" then
 				table.insert(displayers, table.concat(parser[v.label], ","))
+			else
+				assert(false)
 			end
 		end
 		return displayer(displayers)

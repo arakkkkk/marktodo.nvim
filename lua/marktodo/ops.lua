@@ -9,9 +9,10 @@ function M.get_ops(options)
 		telescope_width = vim.o.columns * 0.8,
 		telescope_columns = {
 			{ label = "priority", order = 1 },
-			{ label = "description", order = 2, max_width = 30 },
-			{ label = "project_tags", order = 3 },
-			{ label = "context_tags", order = 4 },
+			{ label = "file_path", order = 2, max_width = 15 },
+			{ label = "description", order = 3, max_width = 30 },
+			{ label = "project_tags", order = 4 },
+			{ label = "context_tags", order = 5 },
 			-- creation_date = { order = 3, width = 0.2 },
 		},
 		separator = "      ",
