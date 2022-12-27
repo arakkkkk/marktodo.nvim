@@ -40,7 +40,7 @@ end
 
 return function(parsers, opts)
 	opts = opts or {}
-	opts.layout_strategy = "vertical"
+	-- opts.layout_strategy = "vertical"
 	opts.layout_config = { height = 0.8, width = 0.8 }
 	opts.previewer = require("telescope.config").values.grep_previewer({})
 
