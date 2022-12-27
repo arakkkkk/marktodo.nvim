@@ -39,11 +39,10 @@ local function getColumnWidth(parsers, label, max_width)
 end
 
 return function(parsers, opts)
-	opts = opts or {
-		-- layout_strategy = "vertical",
-		layout_config = { height = 0.8, width = 0.8 },
-		previewer = true
-	}
+	opts = opts or {}
+	opts.layout_strategy = "vertical"
+	opts.layout_config = { height = 0.8, width = 0.8 }
+	opts.previewer = require("telescope.config").values.grep_previewer({})
 
 	local widths = {}
 	for _, v in pairs(getSortedColumns()) do
@@ -91,7 +90,7 @@ return function(parsers, opts)
 				return true
 			end,
 			sorter = conf.generic_sorter(opts),
-			previewer = conf.file_previewer({}),
+			-- previewer = conf.file_previewer({}),
 			-- previewer = require('telescope.config').values.grep_previewer({})
 		})
 		:find()
