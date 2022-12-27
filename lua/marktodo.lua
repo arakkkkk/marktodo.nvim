@@ -7,6 +7,7 @@ function marktodo.MarktodoSearch()
 		parser:parse()
 		todo_lines[i] = parser
 	end
+	todo_lines = require("marktodo.todosorter").sort(todo_lines)
 	require("marktodo.third_party.telescope")(todo_lines)
 end
 

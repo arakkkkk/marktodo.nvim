@@ -2,7 +2,7 @@ local M = {}
 
 function M.get_ops(options)
 	local ops = {
-		sort = "priority", -- priority, is available
+		sort = {"priority"}, -- priority, is available
 		telescope = true, -- Only true is supported now.
 		telescope_width = vim.o.columns * 0.8,
 		telescope_columns = {
