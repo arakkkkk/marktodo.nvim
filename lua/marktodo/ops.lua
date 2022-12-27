@@ -2,18 +2,18 @@ local M = {}
 
 function M.get_ops(options)
 	local ops = {
-		sort = {"priority"}, -- priority, is available
+		sort = { "priority" }, -- priority, is available
+		only_top_level_tasks = true,
 		telescope = true, -- Only true is supported now.
 		telescope_width = vim.o.columns * 0.8,
 		telescope_columns = {
 			{ label = "priority", order = 1 },
-			{ label = "description", order = 2, width = 0.5 },
-			{ label = "project_tags", order = 3, width = 0.2 },
-			{ label = "context_tags", order = 4, width = 0.2 },
+			{ label = "description", order = 2, max_width = 30 },
+			{ label = "project_tags", order = 3 },
+			{ label = "context_tags", order = 4 },
 			-- creation_date = { order = 3, width = 0.2 },
 		},
 		separator = "      ",
-		-- TODO: max_width
 		marktodo_patterns = {
 			completion = "- %[([x ])%]",
 			priority = "%(([A-Z ]?)%)",

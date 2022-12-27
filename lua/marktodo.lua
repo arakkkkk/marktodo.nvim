@@ -30,6 +30,11 @@ function marktodo.setup(ops)
 		.. mp.creation_date
 		.. ")?"
 
+	if marktodo.ops.only_top_level_task then
+		marktodo.marktodo_pattern = "^" .. marktodo.marktodo_pattern
+	end
+
+
 	vim.api.nvim_create_user_command("Marktodo", function()
 		marktodo.MarktodoSearch()
 	end, {})
