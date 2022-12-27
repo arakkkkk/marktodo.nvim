@@ -91,7 +91,7 @@ return function(parsers, opts)
 				return true
 			end,
 			sorter = conf.generic_sorter(opts),
-			-- previewer = conf.file_previewer({}),
+			previewer = conf.file_previewer({}),
 			-- previewer = require('telescope.config').values.grep_previewer({})
 		})
 		:find()
