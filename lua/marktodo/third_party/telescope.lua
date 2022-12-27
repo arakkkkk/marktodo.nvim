@@ -25,8 +25,7 @@ local function getColumnWidth(parsers, label, max_width)
 	max_width = max_width or 9999
 	local width = 0
 	for _, parser in pairs(parsers) do
-		local text = parser[label] or ""
-		text = type(parser[label]) == "string" and parser[label] or table.concat(parser[label], ",")
+		local text = type(parser[label]) == "string" and parser[label] or table.concat(parser[label], ",")
 		if #text > width then
 			width = #text
 		end
@@ -55,9 +54,7 @@ return function(parsers, opts)
 	local make_display = function(parser)
 		local displayers = {}
 		for _, v in pairs(getSortedColumns()) do
-			if parser[v.label] == nil then
-				table.insert(displayers, "")
-			elseif type(parser[v.label]) == "string" then
+			if type(parser[v.label]) == "string" then
 				table.insert(displayers, parser[v.label])
 			else
 				table.insert(displayers, table.concat(parser[v.label], ","))

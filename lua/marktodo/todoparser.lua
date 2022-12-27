@@ -24,28 +24,28 @@ TodoParser.new = function(todo_line, file_path, line_number)
 		_, _, chapture = residue:find(mp.completion)
 		residue = residue:gsub("^%s*" .. mp.completion, "")
 		residue = residue:gsub("^% +", "")
-		self.completion = chapture
+		self.completion = chapture or ""
 		-- Priotiry
 		_, _, chapture = residue:find(mp.priority)
 		residue = residue:gsub("^" .. mp.priority, "")
 		residue = residue:gsub("^% +", "")
-		self.priority = chapture
+		self.priority = chapture or ""
 		-- CompletionDate
 		_, _, chapture = residue:find(mp.completion_date)
 		residue = residue:gsub("^" .. mp.completion_date, "")
 		residue = residue:gsub("^% +", "")
-		self.completion_date = chapture
+		self.completion_date = chapture or ""
 		-- CreationDate
 		_, _, chapture = residue:find(mp.creation_date)
 		residue = residue:gsub("^" .. mp.creation_date, "")
 		residue = residue:gsub("^% +", "")
-		self.creation_date = chapture
+		self.creation_date = chapture or ""
 
 		-- Description
-		self.description = residue
-		self.project_tags = self:getProjectTags()
-		self.context_tags = self:getContextTags()
-		self.special_keyvalue_tags = self:getSpecialKeyvalueTags()
+		self.description = residue or ""
+		self.project_tags = self:getProjectTags() or ""
+		self.context_tags = self:getContextTags() or ""
+		self.special_keyvalue_tags = self:getSpecialKeyvalueTags() or ""
 	end
 
 	---------------
