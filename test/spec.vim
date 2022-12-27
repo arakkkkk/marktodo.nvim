@@ -7,3 +7,7 @@ runtime plugin/plenary.vim
 
 lua require('plenary.busted')
 lua require('matcher_combinators.luassert')
+
+" configuring the plugin
+runtime plugin/marktodo.lua
+lua require('marktodo').setup({})

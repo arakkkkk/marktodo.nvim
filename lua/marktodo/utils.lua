@@ -46,11 +46,14 @@ function M.TableConcat(t1, t2)
 	return t1
 end
 
-function M.split(str, seq)
+function M.split(str, seq, max_count)
+	max_count = max_count or 99999999999999
+	local count = 0
 	local tab = {}
 	while str ~= "" do
+		count = count + 1
 		local fc = string.find(str, seq)
-		if fc == nil then
+		if fc == nil or count >= max_count then
 			table.insert(tab, str)
 			break
 		end
@@ -69,5 +72,5 @@ function M.includes(tab, str)
 	return false
 end
 
-return M
 
+return M
