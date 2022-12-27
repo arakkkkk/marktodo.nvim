@@ -14,7 +14,7 @@ TodoParser.new = function(todo_line, file_path, line_number)
 	---------------
 	obj.isComplete = function(self)
 		local _, _, chapture = obj.todo_line:find(mp.completion)
-		return chapture == "x"
+		return chapture == "x" or chapture == "X"
 	end
 
 	obj.parse = function(self)

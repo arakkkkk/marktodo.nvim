@@ -2,13 +2,17 @@ local marktodo = {}
 
 function marktodo.MarktodoSearch()
 	local todo_lines = require("marktodo.todofinder").find()
-	for i, line in pairs(todo_lines) do
+	local parsers = {}
+	for _, line in pairs(todo_lines) do
 		local parser = require("marktodo.todoparser").new(line.matched, line.file_path, line.line_number)
 		parser:parse()
-		todo_lines[i] = parser
+		if parser.completion == "x" or parser.completion == "X" then
+		else
+			table.insert(parsers, parser)
+		end
 	end
-	todo_lines = require("marktodo.todosorter").sort(todo_lines)
-	require("marktodo.third_party.telescope")(todo_lines)
+	parsers = require("marktodo.todosorter").sort(parsers)
+	require("marktodo.third_party.telescope")(parsers)
 end
 
 function marktodo.setup(ops)
@@ -30,7 +34,7 @@ function marktodo.setup(ops)
 		.. mp.creation_date
 		.. ")?"
 
-	if marktodo.ops.only_top_level_task then
+	if marktodo.ops.only_top_level_tasks then
 		marktodo.marktodo_pattern = "^" .. marktodo.marktodo_pattern
 	end
 

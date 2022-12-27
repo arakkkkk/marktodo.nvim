@@ -38,6 +38,10 @@ use({
 :Marktodo
 ```
 
+Open files contain selected todo with <CR>.
+
+Complete task from telescope window with <C-t>.
+
 ### Issues
 - [x] todoparser
 - [x] todofinder

@@ -2,7 +2,6 @@ local marktodo = require("marktodo")
 local grep = require("marktodo.third_party.grep")
 local M = {}
 
--- TODO: finder
 function M.find(filter)
 	filter = filter or {}
 	filter.priotiry = filter.priotiry or "A-Z"

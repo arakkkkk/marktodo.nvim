@@ -82,16 +82,28 @@ return function(parsers, opts)
 			}),
 			attach_mappings = function(prompt_bufnr, map)
 				actions.select_default:replace(function()
-					actions.close(prompt_bufnr)
 					local parser = action_state.get_selected_entry()
+					actions.close(prompt_bufnr)
 					vim.cmd(":e " .. parser.file_path)
 					vim.cmd(":" .. parser.line_number)
+				end)
+				map("i", "<C-t>", function()
+					actions.close(prompt_bufnr)
+					local parser = action_state.get_selected_entry()
+					io.popen('sed -i -e "' .. parser.line_number .. 's/- \\[ \\]/- [X]/g" ' .. parser.file_path)
+					vim.cmd("Marktodo")
+				end)
+				map("n", "<C-t>", function()
+					actions.close(prompt_bufnr)
+					local parser = action_state.get_selected_entry()
+					io.popen('sed -i -e "' .. parser.line_number .. 's/- \\[ \\]/- [X]/g" ' .. parser.file_path)
+					vim.cmd("Marktodo")
 				end)
 				return true
 			end,
 			-- sorter = conf.generic_sorter(opts),
-			previewer = conf.file_previewer({}),
-			-- previewer = require('telescope.config').values.grep_previewer({})
+			-- previewer = conf.file_previewer({}),
+			previewer = require("telescope.config").values.grep_previewer({}),
 		})
 		:find()
 end
