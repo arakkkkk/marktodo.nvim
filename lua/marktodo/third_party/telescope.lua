@@ -40,9 +40,9 @@ end
 
 return function(parsers, opts)
 	opts = opts or {
-		layout_strategy = "vertical",
+		-- layout_strategy = "vertical",
 		layout_config = { height = 0.8, width = 0.8 },
-		preview = true
+		previewer = true
 	}
 
 	local widths = {}
