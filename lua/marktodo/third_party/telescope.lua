@@ -25,7 +25,8 @@ local function getColumnWidth(parsers, label, max_width)
 	max_width = max_width or 9999
 	local width = 0
 	for _, parser in pairs(parsers) do
-		local text = type(parser[label]) == "string" and parser[label] or table.concat(parser[label], ",")
+		local text = parser[label] or ""
+		text = type(parser[label]) == "string" and parser[label] or table.concat(parser[label], ",")
 		if #text > width then
 			width = #text
 		end
