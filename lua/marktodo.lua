@@ -12,6 +12,7 @@ function marktodo.MarktodoSearch()
 end
 
 function marktodo.setup(ops)
+	ops = ops or {}
 	marktodo.ops = require("marktodo.ops").get_ops(ops)
 
 	local mp = marktodo.ops.marktodo_patterns

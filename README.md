@@ -1,13 +1,13 @@
-# plugin
-# [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/)
+# Marktodo
+# [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/) with neovim!!
+You can search todo written by [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/) format from alll files in your current directory.
 
 ## screenshots
 
 ## Instration
 Using packer
 ```
-use 'arakkkkk/kanban.nvim'
--- Optional
+use 'arakkkkk/marktodo.nvim'
 use 'nvim-telescope/telescope.nvim'
 ```
 
@@ -28,8 +28,18 @@ use 'nvim-telescope/telescope.nvim'
 7. Project Tag (Optional)
 8. Special key/value tag (Optional)
 
+## Search todo with nvim-telescope
+```
+use({
+	"/arakkkkk/marktodo.nvim",
+	config = function()
+		require("marktodo").setup()
+	end,
+})
+```
+
 ### Issues
-- [ ] todoparser
-- [ ] todofinder
-- [ ] cmp
+- [x] todoparser
+- [x] todofinder
+- [x] cmp
 - [ ] todoevents
