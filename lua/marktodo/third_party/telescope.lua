@@ -42,6 +42,7 @@ return function(parsers, opts)
 	opts = opts or {
 		layout_strategy = "vertical",
 		layout_config = { height = 0.8, width = 0.8 },
+		preview = true
 	}
 
 	local widths = {}
@@ -91,7 +92,7 @@ return function(parsers, opts)
 			end,
 			sorter = conf.generic_sorter(opts),
 			-- previewer = conf.file_previewer({}),
-			previewer = require('telescope.config').values.grep_previewer({})
+			-- previewer = require('telescope.config').values.grep_previewer({})
 		})
 		:find()
 end
