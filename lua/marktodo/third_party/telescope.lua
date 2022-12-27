@@ -89,7 +89,7 @@ return function(parsers, opts)
 				end)
 				return true
 			end,
-			sorter = conf.generic_sorter(opts),
+			-- sorter = conf.generic_sorter(opts),
 			previewer = conf.file_previewer({}),
 			-- previewer = require('telescope.config').values.grep_previewer({})
 		})

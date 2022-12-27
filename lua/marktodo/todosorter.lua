@@ -6,8 +6,11 @@ function M.sort(parsers)
 		if type(or_head_parser[target]) ~= "string" then
 			return false
 		end
-		if or_head_parser[target] == "" then
+		if or_head_parser[target]:match("^%s*$") then
 			return false
+		end
+		if compare_parser[target]:match("^%s*$") then
+			return true
 		end
 		if target == "priority" then
 			return or_head_parser[target] < compare_parser[target]
@@ -18,7 +21,7 @@ function M.sort(parsers)
 	for _, sort_target in pairs(marktodo.ops.sort) do
 		for i = 1, #parsers do
 			for j = i, #parsers - 1 do
-				if not isHead(parsers[j + 1], parsers[j], sort_target) then
+				if isHead(parsers[j + 1], parsers[j], sort_target) then
 					local tail = parsers[j]
 					parsers[j] = parsers[j + 1]
 					parsers[j + 1] = tail
