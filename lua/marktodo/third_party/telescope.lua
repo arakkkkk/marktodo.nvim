@@ -23,11 +23,28 @@ local function getSortedColumns()
 	return res
 end
 
-local function getColumnWidth(parsers, label, max_width)
-	max_width = max_width or 9999
+
+local function createDisplayers(parser)
+	-- Create list of column title of target parser(todo)
+	local displayers = {}
+	for _, v in pairs(getSortedColumns()) do
+		if type(parser[v.label]) == "table" then
+			local disp = v.replacer and v.replacer(parser) or table.concat(parser[v.label], " ")
+			table.insert(displayers, disp)
+		else
+			local disp = v.replacer and v.replacer(parser) or parser[v.label]
+			table.insert(displayers, disp)
+		end
+	end
+	return displayers
+end
+
+local function getColumnWidth(parsers, col_number, max_width)
+	max_width = max_width or 999
+	-- if parser[label]
 	local width = 0
 	for _, parser in pairs(parsers) do
-		local text = type(parser[label]) == "string" and parser[label] or table.concat(parser[label], ",")
+		local text = createDisplayers(parser)[col_number]
 		if #text > width then
 			width = #text
 		end
@@ -40,13 +57,10 @@ end
 
 return function(parsers, opts)
 	opts = opts or {}
-	-- opts.layout_strategy = "vertical"
-	-- opts.layout_config = { height = 0.8, width = 0.8 }
-	-- opts.previewer = require("telescope.config").values.grep_previewer({})
 
 	local widths = {}
-	for _, v in pairs(getSortedColumns()) do
-		table.insert(widths, { width = getColumnWidth(parsers, v.label, v.max_width) })
+	for col_number, v in pairs(getSortedColumns()) do
+		table.insert(widths, { width = getColumnWidth(parsers, col_number, v.max_width) })
 	end
 
 	local displayer = entry_display.create({
@@ -55,18 +69,7 @@ return function(parsers, opts)
 	})
 
 	local make_display = function(parser)
-		local displayers = {}
-		for _, v in pairs(getSortedColumns()) do
-			if v.label == "file_path" then
-				table.insert(displayers, parser[v.label]:sub(#vim.fn.getcwd()+2, #parser[v.label]))
-			elseif type(parser[v.label]) == "string" then
-				table.insert(displayers, parser[v.label])
-			elseif type(parser[v.label]) == "table" then
-				table.insert(displayers, table.concat(parser[v.label], " "))
-			else
-				assert(false)
-			end
-		end
+		local displayers = createDisplayers(parser)
 		return displayer(displayers)
 	end
 
@@ -105,8 +108,6 @@ return function(parsers, opts)
 				end)
 				return true
 			end,
-			-- sorter = conf.generic_sorter(opts),
-			-- previewer = conf.file_previewer({}),
 			previewer = require("telescope.config").values.grep_previewer({}),
 		})
 		:find()

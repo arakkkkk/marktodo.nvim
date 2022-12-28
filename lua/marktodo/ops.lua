@@ -9,9 +9,34 @@ function M.get_ops(options)
 		telescope_width = vim.o.columns * 0.8,
 		telescope_columns = {
 			{ label = "priority", order = 1 },
-			{ label = "file_path", order = 2, max_width = 15 },
+			-- 	local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
+			-- { label = "absolute_file_path", order = 2, replacer = function(todo)
+			-- 	return todo.file_path:sub(#vim.fn.getcwd() + 2)
+			-- end },
+			{ label = "smart_file_path", order = 2, max_width = 15, replacer = function(todo)
+				local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
+				local disp = ""
+				for m in abs_path:gmatch("([^/])[^/]+/") do
+					disp = disp  .. m .. "/"
+				end
+				return disp .. todo.file_path:match("/([^/]+).md$")
+			end },
+			-- { label = "file_name", order = 2, max_width = 10, replacer = function(todo)
+			-- 	return todo.file_path:match("/([^/]+).md$")
+			-- end },
+			-- { label = "dir_name", order = 2, max_width = 10, replacer = function(todo)
+			-- 	local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
+			-- 	return abs_path:match("^([^/]+)/")
+			-- end },
 			{ label = "description", order = 3, max_width = 30 },
-			{ label = "project_tags", order = 4 },
+			{
+				label = "project_tags",
+				order = 4,
+				replacer = function(todo)
+					-- Separate project tags by comma
+					return table.concat(todo.project_tags, " ")
+				end,
+			},
 			{ label = "context_tags", order = 5 },
 			-- creation_date = { order = 3, width = 0.2 },
 		},
