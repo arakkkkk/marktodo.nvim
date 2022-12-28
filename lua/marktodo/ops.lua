@@ -42,7 +42,7 @@ function M.get_ops(options)
 		},
 		separator = "      ",
 		marktodo_patterns = {
-			completion = "- %[([x ])%]",
+			completion = "- %[([x -])%]",
 			priority = "%(([A-Z ]?)%)",
 			completion_date = "([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])",
 			creation_date = "([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])",

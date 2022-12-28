@@ -40,7 +40,7 @@ use({
 
 Open files contain selected todo with <CR>.
 
-Complete task from telescope window with <C-t>.
+Complete task from telescope window with <C-d>.
 
 ## Settings
 
@@ -103,4 +103,6 @@ require("marktodo").setup({
 - [x] todoparser
 - [x] todofinder
 - [x] cmp
-- [ ] todoevents
+- [X] todoevents
+- [ ] Sort by due
+- [ ] Sort by created
