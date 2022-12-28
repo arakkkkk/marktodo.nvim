@@ -12,9 +12,6 @@ function marktodo.MarktodoSearch()
 		end
 	end
 	parsers = require("marktodo.todosorter").sort(parsers)
-	for _, parser in pairs(parsers) do
-		print(parser.todo_line)
-	end
 	require("marktodo.third_party.telescope")(parsers)
 end
 

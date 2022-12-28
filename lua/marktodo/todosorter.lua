@@ -13,6 +13,11 @@ function M.sort(parsers)
 			return true
 		end
 		if target == "priority" then
+			print(
+				or_head_parser[target] < compare_parser[target],
+				":",
+				compare_parser[target] .. ", " .. or_head_parser[target]
+			)
 			return or_head_parser[target] < compare_parser[target]
 		end
 		assert(target)
