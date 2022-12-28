@@ -2,25 +2,37 @@ local M = {}
 
 function M.get_ops(options)
 	local ops = {
-		sort = { "priority" }, -- priority, is available
+		sort = { "priority", "completion" }, -- last is precedence
 		-- exclude_ops = "-g '!./**/.md'",
 		only_top_level_tasks = true,
 		telescope = true, -- Only true is supported now.
 		telescope_width = vim.o.columns * 0.8,
 		telescope_columns = {
-			{ label = "priority", order = 1 },
+			-- { label = "priority", order = 1 },
+			{
+				label = "status",
+				order = 1,
+				replacer = function(todo)
+					return todo.priority .. " " .. todo.completion
+				end,
+			},
 			-- 	local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
 			-- { label = "absolute_file_path", order = 2, replacer = function(todo)
 			-- 	return todo.file_path:sub(#vim.fn.getcwd() + 2)
 			-- end },
-			{ label = "smart_file_path", order = 2, max_width = 15, replacer = function(todo)
-				local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
-				local disp = ""
-				for m in abs_path:gmatch("([^/])[^/]+/") do
-					disp = disp  .. m .. "/"
-				end
-				return disp .. todo.file_path:match("/([^/]+).md$")
-			end },
+			{
+				label = "smart_file_path",
+				order = 2,
+				max_width = 15,
+				replacer = function(todo)
+					local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
+					local disp = ""
+					for m in abs_path:gmatch("([^/])[^/]+/") do
+						disp = disp .. m .. "/"
+					end
+					return disp .. todo.file_path:match("/([^/]+).md$")
+				end,
+			},
 			-- { label = "file_name", order = 2, max_width = 10, replacer = function(todo)
 			-- 	return todo.file_path:match("/([^/]+).md$")
 			-- end },
@@ -42,7 +54,7 @@ function M.get_ops(options)
 		},
 		separator = "      ",
 		marktodo_patterns = {
-			completion = "- %[([x -])%]",
+			completion = "- %[([xX -])%]",
 			priority = "%(([A-Z ]?)%)",
 			completion_date = "([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])",
 			creation_date = "([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])",
