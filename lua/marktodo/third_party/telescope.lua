@@ -54,18 +54,6 @@ return function(parsers, opts)
 		items = widths,
 	})
 
-	-- local make_display = function(parser)
-	-- 	local displayers = {}
-	-- 	for _, v in pairs(getSortedColumns()) do
-	-- 		if type(parser[v.label]) == "string" then
-	-- 			table.insert(displayers, parser[v.label])
-	-- 		else
-	-- 			table.insert(displayers, table.concat(parser[v.label], ","))
-	-- 		end
-	-- 	end
-	-- 	return displayer(displayers)
-	-- end
-
 	local make_display = function(parser)
 		local displayers = {}
 		for _, v in pairs(getSortedColumns()) do
@@ -74,7 +62,7 @@ return function(parsers, opts)
 			elseif type(parser[v.label]) == "string" then
 				table.insert(displayers, parser[v.label])
 			elseif type(parser[v.label]) == "table" then
-				table.insert(displayers, table.concat(parser[v.label], ","))
+				table.insert(displayers, table.concat(parser[v.label], " "))
 			else
 				assert(false)
 			end
