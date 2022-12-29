@@ -44,7 +44,7 @@ local function getColumnWidth(parsers, col_number, max_width)
 	local width = 0
 	for _, parser in pairs(parsers) do
 		local text = createDisplayers(parser)[col_number]
-		assert(text, "Please check setup options in telescope_columns")
+		assert(text, "Please check setup options in telescope_columns in col number" .. tostring(col_number))
 		if #text > width then
 			width = #text
 		end
