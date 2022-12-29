@@ -3,7 +3,7 @@
 You can search todo written by [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/) format from alll files in your current directory.
 
 ## screenshots
-![doc](doc/doc.mov)
+![doc](doc/doc.gif)
 
 ## Instration
 Using packer
