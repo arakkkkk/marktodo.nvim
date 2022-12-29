@@ -8,7 +8,7 @@ The listed tasks are displayed with information such as title, file name, and PR
 
 A sorting function is also implemented.
 
-You can complete the selected task with <C-d> and REPLACE with [X].
+You can complete the selected task with <C-d> and replace with [X].
 
 ## screenshots
 ![doc](doc/doc.gif)
