@@ -23,7 +23,6 @@ local function getSortedColumns()
 	return res
 end
 
-
 local function createDisplayers(parser)
 	-- Create list of column title of target parser(todo)
 	local displayers = {}

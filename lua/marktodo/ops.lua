@@ -4,6 +4,8 @@ function M.get_ops(options)
 	local ops = {
 		sort = { "priority", "completion" }, -- last is precedence
 		-- exclude_ops = "-g '!./**/.md'",
+		-- default_root_path = "path/to/default/root",
+		-- default_root_path = nil,
 		only_top_level_tasks = true,
 		telescope = true, -- Only true is supported now.
 		telescope_width = vim.o.columns * 0.8,

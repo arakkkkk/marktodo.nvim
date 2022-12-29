@@ -3,7 +3,7 @@ local marktodo = require("marktodo")
 
 describe("todoparser_pser", function()
 	it("works!", function()
-		local todo_lines = require("marktodo.todofinder").find()
+		local todo_lines = require("marktodo.todofinder").find(vim.fn.getcwd())
 		for _, line in pairs(todo_lines) do
 			local parser = require("marktodo.todoparser").new(line.matched, line.file_path, line.line_number)
 			assert(type(parser:isComplete()) == "boolean")

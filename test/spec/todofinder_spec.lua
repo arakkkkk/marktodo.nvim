@@ -3,7 +3,7 @@ local marktodo = require("marktodo")
 
 describe("todofinder_find", function()
    it('works!', function()
-     local todo_lines = require("marktodo.todofinder").find()
+     local todo_lines = require("marktodo.todofinder").find(vim.fn.getcwd())
      for _, line in pairs(todo_lines) do
        assert(type(line.file_path) == "string", line.file_path)
        assert(type(line.line_number) == "number", line.line_number)
