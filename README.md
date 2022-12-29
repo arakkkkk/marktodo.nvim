@@ -43,7 +43,11 @@ use({
 
 ## Search todo with nvim-telescope
 ```
-:Marktodo root_path="~/path/to/find"
+:Marktodo
+```
+or
+```
+:Marktodo root_path=~/path/to/find
 ```
 or
 ```
