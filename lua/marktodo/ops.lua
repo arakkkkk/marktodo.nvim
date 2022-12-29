@@ -32,7 +32,8 @@ function M.get_ops(options)
 					for m in abs_path:gmatch("([^/])[^/]+/") do
 						disp = disp .. m .. "/"
 					end
-					return disp .. todo.file_path:match("/([^/]+).md$")
+					local file_name = abs_path:match("^([^/]+)/") or abs_path
+					return disp .. file_name
 				end,
 			},
 			-- { label = "file_name", order = 2, max_width = 10, replacer = function(todo)
@@ -40,7 +41,7 @@ function M.get_ops(options)
 			-- end },
 			-- { label = "dir_name", order = 2, max_width = 10, replacer = function(todo)
 			-- 	local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
-			-- 	return abs_path:match("^([^/]+)/")
+			-- 	return abs_path:match("^([^/]+)/") or abs_path
 			-- end },
 			{ label = "description", order = 3, max_width = 30 },
 			{
