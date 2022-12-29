@@ -2,6 +2,14 @@
 # [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/) with neovim!!
 You can search todo written by [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/) format from alll files in your current directory.
 
+You can search and list tasks created in multiple files with markdown files using Telescope.
+
+The listed tasks are displayed with information such as title, file name, and PRIORITY information.
+
+A sorting function is also implemented.
+
+You can complete the selected task with <C-d> and REPLACE with [X].
+
 ## screenshots
 ![doc](doc/doc.gif)
 
