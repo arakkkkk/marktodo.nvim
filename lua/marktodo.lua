@@ -2,6 +2,10 @@ local marktodo = {}
 
 function marktodo.marktodo(root_path)
 	marktodo.ops.root_path = root_path or marktodo.ops.default_root_path or vim.fn.getcwd()
+	print("arg:", root_path)
+	print("ops:", marktodo.ops.default_root_path)
+	print("cwd:", vim.fn.getcwd())
+	print("result:", marktodo.ops.root_path)
 	marktodo.ops.root_path = marktodo.ops.root_path:gsub("^~", os.getenv("HOME"))
 
 	local todo_lines = require("marktodo.todofinder").find(marktodo.ops.root_path)
