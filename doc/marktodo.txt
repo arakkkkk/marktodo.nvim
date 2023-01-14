@@ -3,40 +3,35 @@
 ==============================================================================
 CONTENTS                                          *my-awesome-plugin-contents*
 
-    1. Introduction ......................... |my-awesome-plugin-introduction|
-    2. Setup ................................ |my-awesome-plugin-setup|
+    1. Introduction ......................... |marktodo-introduction|
+    2. Setup ................................ |marktodo-setup|
     3. Commands ............................. |my-awesome-plugin-commands|
     4. API .................................. |my-awesome-plugin-api|
 
 ==============================================================================
-1. INTRODUCTION                               *my-awesome-plugin-introduction*
+1. INTRODUCTION                               *marktodo-introduction*
 
-my-awesome-plugin makes Neovim, your favorite text editor, capable of greeting
-you. See bellow how it works:
-
-                +--------------+              +--------------+
-                |              |              |              |
-                |              |              |              |
-                |              |              |              |
-                |    Hello     | -----------> |  [your-name] |
-                |              |              |              |
-                |              |              |              |
-                +--------------+              +--------------+
 
 ==============================================================================
-2. SETUP                                             *my-awesome-plugin-setup*
-
-Make sure to add to call the setup function with the proper configuration on
-your `init` file.
-
-If you use `init.vim`: >
-
-    lua require('my_awesome_plugin').setup { name = 'Alexander, The Great'}
+2. SETUP                                             *marktodo-setup*
 
 
-Or, if you use `init.lua`: >
+telescope_columns
+```
+{
+	{ label = "absolute_file_path", order = 2, replacer = function(todo)
+		return todo.file_path:sub(#vim.fn.getcwd() + 2)
+	end },
+    { label = "file_name", order = 2, max_width = 10, replacer = function(todo)
+	    return todo.file_path:match("/([^/]+).md$")
+    end },
+    { label = "dir_name", order = 2, max_width = 10, replacer = function(todo)
+	    local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
+	    return abs_path:match("^([^/]+)/") or abs_path
+    end },
+}
+```
 
-    require('my_awesome_plugin').setup { name = 'Alexander, The Great'}
 
 ==============================================================================
 3. COMMANDS                                       *my-awesome-plugin-commands*

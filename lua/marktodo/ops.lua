@@ -2,13 +2,18 @@ local M = {}
 
 function M.get_ops(options)
 	local ops = {
-		sort = { "priority", "completion" }, -- last is precedence
+		sort = { "priority", "project_tags", "completion" }, -- last is precedence
+		filter = { completion = "[ -]", priority = "[A-Z]" },
 		-- exclude_ops = "-g '!./**/.md'",
 		-- default_root_path = "path/to/default/root",
-		-- default_root_path = nil,
 		only_top_level_tasks = true,
 		telescope = true, -- Only true is supported now.
 		telescope_width = vim.o.columns * 0.8,
+		description_display = {
+			context_tags = true,
+			project_tags = false,
+			special_keyvalue_tags = false,
+		},
 		telescope_columns = {
 			-- { label = "priority", order = 1 },
 			{
@@ -18,10 +23,6 @@ function M.get_ops(options)
 					return todo.priority .. " " .. todo.completion
 				end,
 			},
-			-- 	local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
-			-- { label = "absolute_file_path", order = 2, replacer = function(todo)
-			-- 	return todo.file_path:sub(#vim.fn.getcwd() + 2)
-			-- end },
 			{
 				label = "smart_file_path",
 				order = 2,
@@ -36,13 +37,6 @@ function M.get_ops(options)
 					return disp .. file_name
 				end,
 			},
-			-- { label = "file_name", order = 2, max_width = 10, replacer = function(todo)
-			-- 	return todo.file_path:match("/([^/]+).md$")
-			-- end },
-			-- { label = "dir_name", order = 2, max_width = 10, replacer = function(todo)
-			-- 	local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
-			-- 	return abs_path:match("^([^/]+)/") or abs_path
-			-- end },
 			{ label = "description", order = 3, max_width = 30 },
 			{
 				label = "project_tags",
@@ -63,12 +57,13 @@ function M.get_ops(options)
 			creation_date = "([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])",
 			-- description is follor above
 		},
-		desciption_patterns = {
+		description_patterns = {
 			project_tags = "(%+%S+)",
 			context_tags = "(@%S+)",
 			special_keyvalue_tags = "(%S+:%S+)",
 		},
 	}
+	ops.telescope_columns = options.telescope_columns and {} or ops.telescope_columns
 	ops = require("marktodo.utils").tableMerge(ops, options)
 	return ops
 end

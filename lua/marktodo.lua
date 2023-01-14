@@ -1,20 +1,25 @@
 local marktodo = {}
 
-function marktodo.marktodo(root_path)
+function marktodo.marktodo(root_path, filter)
 	marktodo.ops.root_path = root_path or marktodo.ops.default_root_path or vim.fn.getcwd()
 	marktodo.ops.root_path = marktodo.ops.root_path:gsub("^~", os.getenv("HOME"))
+	filter = filter or marktodo.ops.filter
 
 	local todo_lines = require("marktodo.todofinder").find(marktodo.ops.root_path)
 	local parsers = {}
 	for _, line in pairs(todo_lines) do
 		local parser = require("marktodo.todoparser").new(line.matched, line.file_path, line.line_number)
 		parser:parse()
-		if parser.completion == "x" or parser.completion == "X" then
-		else
-			table.insert(parsers, parser)
+		local target = true
+		for key, val in pairs(filter) do
+			target = parser[key]:match(val) and target or false
 		end
+		_ = target and table.insert(parsers, parser)
 	end
 	parsers = require("marktodo.todosorter").sort(parsers)
+	for _, parser in pairs(parsers) do
+		print(parser.todo_line)
+	end
 	require("marktodo.third_party.telescope")(parsers)
 end
 
@@ -65,7 +70,7 @@ function marktodo.setup(ops)
 
 	vim.api.nvim_create_user_command("Marktodo", function(arg)
 		local args = marktodo.argParser(arg)
-		marktodo.marktodo(args.root_path)
+		marktodo.marktodo(args.root_path, args.filter)
 	end, { nargs = "*" })
 end
 

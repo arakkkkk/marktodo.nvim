@@ -3,6 +3,6 @@ local marktodo = require("marktodo")
 
 describe("marktodo", function()
 	it("works!", function()
-		vim.cmd("Marktodo root_path=~/MyDrive/Applycations/Note/ a={'ag':'val'}")
+		vim.cmd("Marktodo nil")
 	end)
 end)

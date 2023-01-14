@@ -1,6 +1,7 @@
 local marktodo = require("marktodo")
 local mp = marktodo.ops.marktodo_patterns
-local mdp = marktodo.ops.desciption_patterns
+local mdp = marktodo.ops.description_patterns
+local mdd = marktodo.ops.description_display
 TodoParser = {}
 
 TodoParser.new = function(todo_line, file_path, line_number)
@@ -56,6 +57,9 @@ TodoParser.new = function(todo_line, file_path, line_number)
 		for match in self.description:gmatch(mdp.project_tags) do
 			table.insert(res_table, match)
 		end
+		if not mdd.project_tags then
+			self.description = self.description:gsub(mdp.project_tags, "")
+		end
 		return res_table
 	end
 
@@ -64,6 +68,9 @@ TodoParser.new = function(todo_line, file_path, line_number)
 		for match in self.description:gmatch(mdp.context_tags) do
 			table.insert(res_table, match)
 		end
+		if not mdd.context_tags then
+			self.description = self.description:gsub(mdp.context_tags, "")
+		end
 		return res_table
 	end
 
@@ -71,6 +78,9 @@ TodoParser.new = function(todo_line, file_path, line_number)
 		local res_table = {}
 		for match in self.description:gmatch(mdp.special_keyvalue_tags) do
 			table.insert(res_table, match)
+		end
+		if not mdd.special_keyvalue_tags then
+			self.description = self.description:gsub(mdp.special_keyvalue_tags, "")
 		end
 		return res_table
 	end

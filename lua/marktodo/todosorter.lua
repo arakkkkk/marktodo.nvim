@@ -29,6 +29,8 @@ function M.sort(parsers)
 			return compare_parser[target]:match("^%s*$") or M.count_date(or_head_parser[target]) < M.count_date(compare_parser[target])
 		elseif target == "file_name" then
 			return compare_parser[target]:match("^%s*$") or or_head_parser[target]:sub(1, 1) < compare_parser[target](1, 1)
+		elseif target == "project_tags" then
+			return compare_parser[target]:match("^%s*$") or or_head_parser[target][1]:sub(1, 1) < compare_parser[target][1](1, 1)
 		end
 		return false
 	end
