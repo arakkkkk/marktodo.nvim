@@ -3,7 +3,7 @@ local M = {}
 function M.get_ops(options)
 	local ops = {
 		sort = { "priority", "project_tags", "completion" }, -- last is precedence
-		filter = { completion = "[ -]", priority = "[A-Z]" },
+		filter = { completion = "[ -]", priority = "[A-Z ]" },
 		-- exclude_ops = "-g '!./**/.md'",
 		-- default_root_path = "path/to/default/root",
 		only_top_level_tasks = true,

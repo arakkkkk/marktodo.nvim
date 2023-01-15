@@ -17,9 +17,9 @@ function marktodo.marktodo(root_path, filter)
 		_ = target and table.insert(parsers, parser)
 	end
 	parsers = require("marktodo.todosorter").sort(parsers)
-	for _, parser in pairs(parsers) do
-		print(parser.todo_line)
-	end
+	-- for _, parser in pairs(parsers) do
+	-- 	print(parser.todo_line)
+	-- end
 	require("marktodo.third_party.telescope")(parsers)
 end
 
