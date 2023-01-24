@@ -87,5 +87,26 @@ function M.due(opts)
 	}
 	return res
 end
+function M.due_day_count(opts)
+	local res = {
+		label = "Due" or opts.label,
+		order = opts.order,
+		max_width = opts.max_width,
+		replacer = function(todo)
+			local due = todo.special_keyvalue_tags.due
+			if due then
+				local t = os.date("*t")
+				local _, _, y, m, d = due:find("(%d%d%d%d)%-(%d%d)%-(%d%d)")
+				local due_time = os.time({ year = y, month = m, day = d, hour = 0, min = 0, sec = 0 })
+				local due_days = due_time / (60 * 60 * 24)
+				local now_time = os.time() - t.hour * 3600 - t.min * 60 - t.sec
+				local now_days = now_time / (60 * 60 * 24)
+				return due_days - now_days .. "d"
+			end
+			return ""
+		end,
+	}
+	return res
+end
 
 return M

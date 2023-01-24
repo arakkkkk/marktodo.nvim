@@ -20,6 +20,7 @@ function M.get_ops(options)
 			{ label = "description", order = 4, max_width = 30 },
 			require("marktodo.view.column_set").projects({ order = 5 }),
 			require("marktodo.view.column_set").contexts({ order = 6 }),
+			require("marktodo.view.column_set").due_day_count({ order = 7 }),
 		},
 		separator = "      ",
 		marktodo_patterns = {
