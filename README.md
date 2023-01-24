@@ -9,7 +9,7 @@ The listed tasks are displayed with information such as title, file name, and PR
 
 A sorting function is also implemented.
 
-## screenshots
+## Demo
 ### Window style
 ![demo](doc/demo_window.gif)
 ![demo](doc/demo_window2.gif)
