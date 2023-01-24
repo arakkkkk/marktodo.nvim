@@ -2,6 +2,7 @@ local marktodo = require("marktodo")
 local mp = marktodo.ops.marktodo_patterns
 local mdp = marktodo.ops.description_patterns
 local mdd = marktodo.ops.description_display
+local utils = require("marktodo.utils")
 TodoParser = {}
 
 TodoParser.new = function(todo_line, file_path, line_number)
@@ -47,6 +48,25 @@ TodoParser.new = function(todo_line, file_path, line_number)
 		self.project_tags = self:getProjectTags() or ""
 		self.context_tags = self:getContextTags() or ""
 		self.special_keyvalue_tags = self:getSpecialKeyvalueTags() or ""
+	end
+
+	-- For filter
+	obj.show = function(self)
+		local filter_param = marktodo.ops.filter
+		-- Perse filter text
+		for filter_kv in filter_param:gmatch("%S+:%S+") do
+			local _, _, key, pat = filter_kv:find("^(%S+):(%S+)")
+			assert(self[key], key .. " is not defined!")
+			if type(self[key]) == "string" then
+				if self[key]:match(pat) then
+				else
+					return false
+				end
+			elseif type(self[key]) == "table" then
+				local show = false
+			end
+		end
+		return true
 	end
 
 	---------------

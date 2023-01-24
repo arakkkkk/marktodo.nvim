@@ -92,9 +92,10 @@ function M.render(bufnr)
 	-- Set header line
 	local len = vim.fn.execute("echo strdisplaywidth('" .. lines[1] .. "')")
 	table.insert(lines, 2, "")
-	for i=1, len do
+	for i = 1, len do
 		lines[2] = lines[2] .. "-"
 	end
+	table.insert(lines, 1, "Filter: /" .. marktodo.ops.filter)
 
 	vim.bo[bufnr]["modifiable"] = true
 	vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, lines)

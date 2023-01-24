@@ -146,10 +146,14 @@ require('cmp').setup({
 ### Issues
 - [x] todoparser
 - [x] todofinder
-- [x] cmp
+- [ ] cmp for due
 - [X] todoevents
 - [ ] Sort by due
 - [X] Sort by created
-- [ ] urgency
-- [ ] task window
-	- [ ] ops setup
+- [-] (A) urgency
+- [-] (A) task window
+	- [x] ops setup
+	- [ ] color highlisht
+	- [ ] add documents
+	- [ ] split window
+	- [ ] preview

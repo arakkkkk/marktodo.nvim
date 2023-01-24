@@ -152,25 +152,25 @@ function source:complete(params, callback)
 			table.insert(cb, { label = t })
 		end
 		-- due
-		-- elseif trig:match("- %[.%] %(.%) .+ due:%S+$") then
-		-- 	local trig_date = trig:match(":%S+$")
-		-- 	if trig_date:match("%d+d") then
-		-- 		table.insert(cb, { label = trig_date })
-		-- 	elseif trig_date:match("^%d%d-%d%d$") then
-		-- 		table.insert(cb, { label = trig_date })
-		-- 	elseif trig_date:match("^%d%d$") then
-		-- 		table.insert(cb, { label = trig_date })
-		-- 	elseif
-		-- 		trig_date:match("n*su")
-		-- 		or trig_date:match("n*mo")
-		-- 		or trig_date:match("n*tu")
-		-- 		or trig_date:match("n*we")
-		-- 		or trig_date:match("n*th")
-		-- 		or trig_date:match("n*fr")
-		-- 		or trig_date:match("n*sa")
-		-- 	then
-		-- 		table.insert(cb, { label = trig_date })
-		-- 	end
+		elseif trig:match("- %[.%] %(.%) .+ due:%S+$") then
+			local trig_date = trig:match(":%S+$")
+			if trig_date:match("%d+d") then
+				table.insert(cb, { label = trig_date })
+			elseif trig_date:match("^%d%d-%d%d$") then
+				table.insert(cb, { label = trig_date })
+			elseif trig_date:match("^%d%d$") then
+				table.insert(cb, { label = trig_date })
+			-- elseif
+			-- 	trig_date:match("n*su")
+			-- 	or trig_date:match("n*mo")
+			-- 	or trig_date:match("n*tu")
+			-- 	or trig_date:match("n*we")
+			-- 	or trig_date:match("n*th")
+			-- 	or trig_date:match("n*fr")
+			-- 	or trig_date:match("n*sa")
+			-- then
+			-- 	table.insert(cb, { label = trig_date })
+			end
 	end
 	callback(cb)
 end
