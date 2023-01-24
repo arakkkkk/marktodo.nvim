@@ -16,7 +16,7 @@ function M.status(opts)
 		order = opts.order,
 		max_width = opts.max_width,
 		replacer = function(todo)
-			return "[" .. (todo.completion or " ") .. "]"
+			return todo.completion or " "
 		end,
 	}
 	return res
