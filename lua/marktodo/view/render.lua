@@ -102,7 +102,6 @@ function M.render(bufnr)
 			lines[i] = lines[i] .. " "
 		end
 	end
-	-- set lines
 	vim.bo[bufnr]["modifiable"] = true
 	vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, lines)
 	vim.bo[bufnr]["modifiable"] = false

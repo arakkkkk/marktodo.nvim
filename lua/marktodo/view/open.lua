@@ -67,6 +67,7 @@ function M.open(root_path, window_type)
 	end
 	vim.cmd("e marktodo://./")
 	vim.cmd(":4")
+	marktodo.bufnr = vim.api.nvim_win_get_buf(0)
 end
 
 return M
