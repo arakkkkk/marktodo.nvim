@@ -127,6 +127,21 @@ require("marktodo").setup({
 }
 ```
 ### Set telescope columns
+### Completion with nvim-cmp
+```lua
+use({"hrsh7th/nvim-cmp"})
+
+require('cmp').setup({
+  sources = {
+    { name = 'marktodo' },
+  },
+})
+```
+- [x] check box
+- [x] priority
+- [x] project
+- [x] tag
+- [ ] due date
 
 ### Issues
 - [x] todoparser
@@ -135,3 +150,4 @@ require("marktodo").setup({
 - [X] todoevents
 - [ ] Sort by due
 - [X] Sort by created
+- [ ] urgency

@@ -171,7 +171,7 @@ function source:complete(params, callback)
 	-- 	then
 	-- 		table.insert(cb, { label = trig_date })
 	-- 	end
-	-- end
+	end
 	callback(cb)
 end
 ---Resolve completion item (optional). This is called right before the completion is about to be displayed.
@@ -189,4 +189,3 @@ function source:execute(completion_item, callback)
 end
 ---Register your source to nvim-cmp.
 require("cmp").register_source("marktodo", source)
-

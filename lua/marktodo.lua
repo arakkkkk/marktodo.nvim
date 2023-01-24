@@ -49,7 +49,8 @@ function marktodo.setup(ops)
 	ops = ops or {}
 	marktodo.ops = require("marktodo.ops").get_ops(ops)
 
-	local status_ok, fault = pcall(require, "marktodo.third_party.cmp")
+	-- local status_ok, fault = pcall(require, "marktodo.third_party.cmp")
+	require("marktodo.third_party.cmp")
 
 	local mp = marktodo.ops.marktodo_patterns
 	marktodo.marktodo_pattern = mp.completion
