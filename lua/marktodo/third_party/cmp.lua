@@ -118,7 +118,7 @@ end
 function source:complete(params, callback)
 	local line = vim.fn.getline(".")
 	local col = vim.fn.charcol(".")
-	local trig = string.sub(line, 1, col)
+	local trig = string.sub(line, 1, col - 1)
 	local cb = {}
 	-- Ceckbox
 	if trig:match("- $") then
@@ -151,26 +151,26 @@ function source:complete(params, callback)
 		for t, _ in pairs(get_cmp_tags()) do
 			table.insert(cb, { label = t })
 		end
-	-- due
-	-- elseif trig:match("- %[.%] %(.%) .+ due:%S+$") then
-	-- 	local trig_date = trig:match(":%S+$")
-	-- 	if trig_date:match("%d+d") then
-	-- 		table.insert(cb, { label = trig_date })
-	-- 	elseif trig_date:match("^%d%d-%d%d$") then
-	-- 		table.insert(cb, { label = trig_date })
-	-- 	elseif trig_date:match("^%d%d$") then
-	-- 		table.insert(cb, { label = trig_date })
-	-- 	elseif
-	-- 		trig_date:match("n*su")
-	-- 		or trig_date:match("n*mo")
-	-- 		or trig_date:match("n*tu")
-	-- 		or trig_date:match("n*we")
-	-- 		or trig_date:match("n*th")
-	-- 		or trig_date:match("n*fr")
-	-- 		or trig_date:match("n*sa")
-	-- 	then
-	-- 		table.insert(cb, { label = trig_date })
-	-- 	end
+		-- due
+		-- elseif trig:match("- %[.%] %(.%) .+ due:%S+$") then
+		-- 	local trig_date = trig:match(":%S+$")
+		-- 	if trig_date:match("%d+d") then
+		-- 		table.insert(cb, { label = trig_date })
+		-- 	elseif trig_date:match("^%d%d-%d%d$") then
+		-- 		table.insert(cb, { label = trig_date })
+		-- 	elseif trig_date:match("^%d%d$") then
+		-- 		table.insert(cb, { label = trig_date })
+		-- 	elseif
+		-- 		trig_date:match("n*su")
+		-- 		or trig_date:match("n*mo")
+		-- 		or trig_date:match("n*tu")
+		-- 		or trig_date:match("n*we")
+		-- 		or trig_date:match("n*th")
+		-- 		or trig_date:match("n*fr")
+		-- 		or trig_date:match("n*sa")
+		-- 	then
+		-- 		table.insert(cb, { label = trig_date })
+		-- 	end
 	end
 	callback(cb)
 end
