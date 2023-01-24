@@ -7,8 +7,6 @@ function M.get_ops(options)
 		filter = "completion:[%s-] and priority:[A-Z]",
 		-- exclude_ops = "-g '!./**/.md'",
 		-- default_root_path = "path/to/default/root",
-		only_top_level_tasks = true,
-		telescope = true,
 		telescope_width = vim.o.columns * 0.8,
 		description_display = {
 			context_tags = true,

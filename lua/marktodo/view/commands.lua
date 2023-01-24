@@ -18,6 +18,7 @@ function M.create()
 		vim.bo[0]["modifiable"] = true
 		vim.api.nvim_buf_set_lines(0, 0, 1, true, { "Filter: /" .. filter_param })
 		vim.bo[0]["modifiable"] = false
+		vim.cmd("e")
 	end, {})
 	vim.api.nvim_create_user_command("TodoOpen", function()
 		local parser = get_cur_task()
@@ -88,9 +89,9 @@ function M.create()
 		if not parser then
 			return
 		end
-		local modify = utils.input("Modify: ")
+		local modify = utils.input("Modify: ", parser.todo_line)
 		if modify then
-			io.popen('sed -i "" -e "' .. parser.line_number .. "s/$/ " .. modify .. '/g" ' .. parser.file_path)
+			io.popen('sed -i "" -e "' .. parser.line_number .. "s/^.*$/" .. modify .. '/g" ' .. parser.file_path)
 		end
 		vim.cmd("e")
 	end, {})

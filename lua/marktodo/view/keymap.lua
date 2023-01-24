@@ -9,7 +9,7 @@ function M.create()
 	vim.keymap.set("n", "-", "<cmd>TodoProgress<cr>", ops)
 	vim.keymap.set("n", "p", "<cmd>TodoSetPriority<cr>", ops)
 	vim.keymap.set("n", "+", "<cmd>TodoSetProject<cr>", ops)
-	vim.keymap.set("n", "d", "<cmd>TodoSetDue<cr>", ops)
+	vim.keymap.set("n", "D", "<cmd>TodoSetDue<cr>", ops)
 	vim.keymap.set("n", "m", "<cmd>TodoModify<cr>", ops)
 end
 

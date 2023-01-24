@@ -4,11 +4,12 @@ local marktodo = require("marktodo")
 vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "marktodo://*",
 	callback = function()
-		-- initial set
-		vim.cmd("set filetype=marktodo_list")
 		-- create buf
 		local bufnr = vim.api.nvim_win_get_buf(0)
 		vim.fn.setbufvar(bufnr, "scratch", "nomodified")
+		vim.bo[bufnr]["filetype"] = "marktodo_list"
+		vim.bo[bufnr]["bufhidden"] = "delete"
+		vim.bo[bufnr]["swapfile"] = false
 		vim.bo[bufnr]["buftype"] = "nofile"
 		vim.bo[bufnr]["modifiable"] = false
 
@@ -24,6 +25,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		require("marktodo.view.commands").create()
 		require("marktodo.view.render").render(0)
 		require("marktodo.view.keymap").create()
+		require("marktodo.view.syntax").set()
 	end,
 })
 vim.api.nvim_create_autocmd("BufLeave", {
@@ -33,8 +35,38 @@ vim.api.nvim_create_autocmd("BufLeave", {
 	end,
 })
 
-function M.open()
+function M.open(root_path, window_type)
+	marktodo.ops.root_path = root_path or marktodo.ops.default_root_path or vim.fn.getcwd()
+	marktodo.ops.root_path = marktodo.ops.root_path:gsub("^~", os.getenv("HOME"))
+
+	if window_type == "right" then
+		vim.cmd("vsplit")
+		vim.cmd("wincmd L")
+	elseif window_type == "left" then
+		vim.cmd("vsplit")
+		vim.cmd("wincmd H")
+	elseif window_type == "top" then
+		vim.cmd("split")
+		vim.cmd("wincmd K")
+	elseif window_type == "bottom" then
+		vim.cmd("split")
+		vim.cmd("wincmd J")
+	elseif window_type == "float" then
+		local win_conf = {
+			relative = "editor",
+			row = 5,
+			col = 10,
+			width = vim.o.columns - 10 * 2,
+			height = vim.fn.winheight(0) - 5 * 2,
+			border = { "x", "═", "x", "║", "x", "═", "x", "║" },
+			style = "minimal",
+			zindex = 10,
+		}
+		local win = vim.api.nvim_open_win(0, true, win_conf)
+		vim.api.nvim_win_set_option(win, "winhighlight", "NormalFloat:Normal")
+	end
 	vim.cmd("e marktodo://./")
+	vim.cmd(":4")
 end
 
 return M

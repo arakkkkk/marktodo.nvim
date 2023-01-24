@@ -93,10 +93,16 @@ function M.render(bufnr)
 	local len = vim.fn.execute("echo strdisplaywidth('" .. lines[1] .. "')")
 	table.insert(lines, 2, "")
 	for i = 1, len do
-		lines[2] = lines[2] .. "-"
+		lines[2] = lines[2] .. "–"
 	end
 	table.insert(lines, 1, "Filter: /" .. marktodo.ops.filter)
-
+	-- Arign col width
+	for i=1 ,#lines do
+		for _ = 1, vim.fn.winwidth(0) - vim.fn.execute("echo strdisplaywidth('" .. lines[i] .. "')") do
+			lines[i] = lines[i] .. " "
+		end
+	end
+	-- set lines
 	vim.bo[bufnr]["modifiable"] = true
 	vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, lines)
 	vim.bo[bufnr]["modifiable"] = false

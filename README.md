@@ -1,18 +1,27 @@
 # Marktodo
-> [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/) with neovim!!
+Task manager inpired by [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/)!!
 
-You can search todo written by [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/) format from alll files in your current directory.
+You can search todo written by [todotxt](https://ericasadun.com/2019/11/13/lightweight-to-do-list-formatting/) format from all files in your current directory.
 
-You can search and list tasks created in multiple files with markdown files using Telescope.
+You can search and list tasks created in multiple files with markdown files using.
 
 The listed tasks are displayed with information such as title, file name, and PRIORITY information.
 
 A sorting function is also implemented.
 
-You can complete the selected task with <C-d> and replace with [X].
-
 ## screenshots
-![doc](doc/doc.gif)
+### Window style
+![demo](doc/demo_window.gif)
+![demo](doc/demo_window2.gif)
+### Telescope style
+![demo](doc/demo_telescope.gif)
+
+## Requirements
+- ripgrep
+
+optional
+- nvim-cmp
+- telescope.nvim
 
 ## Instration
 Using packer
@@ -42,17 +51,42 @@ use({
 7. Project Tag (Optional)
 8. Special key/value tag (Optional)
 
-## Search todo with nvim-telescope
+## List todo with window
+### Start
 ```
-:Marktodo
+# float|full|right|left|top|bottom
+:Marktodo right
+```
+![img](doc/window_right.png)
+or
+```
+:Marktodo full root_path=~/path/to/find
+```
+![img](doc/window_full.png)
+### Keymap
+| Key    | Action                       | Command            |
+| ------ | ---------------------------- | ------------------ |
+| d      | Complete task at the cursor. | `:TodoComplete`    |
+| -      | Start task at the cursor.    | `:TodoProgress`    |
+| f      | Filter tasks.                | `:TodoFilter`      |
+| \<CR\> | Open task buffer.            |    `:TodoOpen`     |
+| p      | Set task priority.           | `:TodoSetPriority` |
+| +      | Set task projects.           | `:TodoSetProject`  |
+| D      | Set task due.                | `:TodoSetDue`      |
+| m      | Modify task.                 | `:TodoModify`      |
+
+## List todo with nvim-telescope
+### Start
+```
+:Marktodo telescope
 ```
 or
 ```
-:Marktodo root_path=~/path/to/find
+:Marktodo telescope root_path=~/path/to/find
 ```
 or
 ```
-require("marktodo").marktodo("~/path/to/find")
+require("marktodo").telescope("~/path/to/find")
 ```
 
 If find path is nil or not set, default_root_path in setup options is used.
@@ -60,17 +94,22 @@ If find path is nil or not set, default_root_path in setup options is used.
 Open files contain selected todo with <CR>.
 
 Complete task from telescope window with <C-d>.
+### Keymap
+| Key     | Action            |
+| ------- | ----------------- |
+| \<CR\>  | Open task buffer. |
+| \<C-o\> | Start task.       |
+| \<C-b\> | Uncomplete task.  |
+| \<C-d\> | Complete task.    |
 
 ## Settings
 ### Set up opsions
 ```
 require("marktodo").setup({
 	sort = { "priority", "project_tags", "completion" }, -- last is precedence
-	filter = { completion = "[ -]", priority = "[A-Z]" },
+	filter = "completion:[%s-] and priority:[A-Z]",
 	-- exclude_ops = "-g '!./**/.md'",
 	-- default_root_path = "path/to/default/root",
-	only_top_level_tasks = true,
-	telescope = true, -- Only true is supported now.
 	telescope_width = vim.o.columns * 0.8,
 	description_display = {
 		context_tags = true,
@@ -78,38 +117,12 @@ require("marktodo").setup({
 		special_keyvalue_tags = false,
 	},
 	columns = {
-		{
-			label = "status",
-			order = 1,
-			replacer = function(todo)
-				return todo.priority .. " " .. todo.completion
-			end,
-		},
-		{
-			label = "smart_file_path",
-			order = 2,
-			max_width = 15,
-			replacer = function(todo)
-				local abs_path = todo.file_path:sub(#vim.fn.getcwd() + 2)
-				local disp = ""
-				for m in abs_path:gmatch("([^/])[^/]+/") do
-					disp = disp .. m .. "/"
-				end
-				local file_name = abs_path:match("^([^/]+)/") or abs_path
-				return disp .. file_name
-			end,
-		},
-		{ label = "description", order = 3, max_width = 30 },
-		{
-			label = "project_tags",
-			order = 4,
-			replacer = function(todo)
-				-- Separate project tags by comma
-				return table.concat(todo.project_tags, " ")
-			end,
-		},
-		{ label = "context_tags", order = 5 },
-		-- creation_date = { order = 3, width = 0.2 },
+		require("marktodo.view.column_set").status({ order = 1 }),
+		require("marktodo.view.column_set").priority({ order = 2 }),
+		require("marktodo.view.column_set").file_smart({ order = 3, max_width = 15 }),
+		{ label = "description", order = 4, max_width = 30 },
+		require("marktodo.view.column_set").projects({ order = 5 }),
+		require("marktodo.view.column_set").contexts({ order = 6 }),
 	},
 	separator = "      ",
 	marktodo_patterns = {
@@ -117,13 +130,13 @@ require("marktodo").setup({
 		priority = "%(([A-Z ]?)%)",
 		completion_date = "([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])",
 		creation_date = "([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])",
-		-- description is follor above
+		-- description is follow above
 	},
 	description_patterns = {
 		project_tags = "(%+%S+)",
 		context_tags = "(@%S+)",
-		special_keyvalue_tags = "(%S+:%S+)",
-	},
+		special_keyvalue_tags = "((%S+):(%S+))",
+	}
 }
 ```
 ### Set telescope columns
@@ -143,17 +156,22 @@ require('cmp').setup({
 - [x] tag
 - [ ] due date
 
-### Issues
+## Inspired by
+- [obsidian-tasks](https://github.com/obsidian-tasks-group/obsidian-tasks)
+- [todo.txt](https://github.com/todotxt/todo.txt)
+- [todo.md](https://github.com/todomd/todo.md)
+
+## Issues
 - [x] todoparser
 - [x] todofinder
 - [ ] cmp for due
 - [X] todoevents
 - [ ] Sort by due
 - [X] Sort by created
-- [-] (A) urgency
-- [-] (A) task window
+- [-] (A) urgency due:2023-02-02
+- [x] (A) task window
 	- [x] ops setup
-	- [ ] color highlisht
+	- [x] color highlisht
 	- [ ] add documents
-	- [ ] split window
+	- [x] split window
 	- [ ] preview

@@ -75,7 +75,7 @@ function M.contexts(opts)
 end
 function M.due(opts)
 	local res = {
-		label = "Context" or opts.label,
+		label = "Due" or opts.label,
 		order = opts.order,
 		max_width = opts.max_width,
 		replacer = function(todo)
