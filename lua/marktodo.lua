@@ -47,7 +47,7 @@ function marktodo.argParser(arg)
 end
 
 function marktodo.setup(ops)
-	ops = {}
+	ops = ops or {}
 	marktodo.ops = require("marktodo.ops").get_ops(ops)
 
 	local status_ok, fault = pcall(require, "marktodo.third_party.cmp")
