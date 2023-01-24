@@ -10,7 +10,7 @@ function M.set()
 	vim.cmd("syntax match marktodoProjects '+[a-zA-Z0-9_-]\\+'")
 	vim.cmd("syntax match marktodoContexts '@[a-zA-Z0-9_-]\\+'")
 	vim.cmd("syntax match marktodoDueToday 'due:" .. os.date("%Y-%m-%d") .. "'")
-	vim.cmd("syntax match marktodoDueToday '0d'")
+	vim.cmd("syntax match marktodoDueToday ' 0d'")
 	for i, parser in pairs(marktodo.parsers) do
 		if parser.completion == "-" then
 			hi(0, 0, "marktodoProgress", i + 2, 0, -1)

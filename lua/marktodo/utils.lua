@@ -85,4 +85,58 @@ function M.input(input_text, default)
 	return input
 end
 
+function M.char2date(trigger)
+	trigger = trigger == "today" and "0d" or trigger
+	trigger = trigger == "tommorow" and "1d" or trigger
+	local table_cmp = {}
+	if not trigger then
+		return table_cmp
+	end
+
+	-- from day: 1d
+	if trigger:match("%d+d") then
+		local t = os.time()
+		local d = trigger:match("%d+")
+		t = t + d * 24 * 60 * 60
+		return os.date("%Y-%m-%d", t)
+	end
+
+	-- from month: 01-01
+	if trigger:match("%d%d%-%d%d$") then
+		local t = os.date("*t")
+		local _, _, m, d = trigger:find("(%d%d)%-(%d%d)")
+		return t.year .. "-" .. m .. "-" .. d
+	-- from day: 01
+	elseif trigger:match("%d%d$") then
+		local t = os.date("*t")
+		local d = trigger:match("%d%d")
+		return t.year .. "-" .. t.month .. "-" .. d
+	-- by week
+	elseif string.match(trigger, "n*[a-z][a-z]$") then
+		local week_name = string.gsub(trigger, "^n*([a-z][a-z])$", "%1")
+		local step_week_num = #string.gsub(trigger, "^(n*)[a-z][a-z]$", "%1")
+		local t = os.time()
+		t = t - ((os.date("*t").wday - 1) * 24 * 60 * 60) -- return to day of this sunday
+		t = t + ((step_week_num * 7) * 24 * 60 * 60) -- step week by count of "n"
+		if week_name == "su" then
+			t = t
+		elseif week_name == "mo" then
+			t = t + (1 * 24 * 60 * 60)
+		elseif week_name == "tu" then
+			t = t + (2 * 24 * 60 * 60)
+		elseif week_name == "we" then
+			t = t + (3 * 24 * 60 * 60)
+		elseif week_name == "th" then
+			t = t + (4 * 24 * 60 * 60)
+		elseif week_name == "fr" then
+			t = t + (5 * 24 * 60 * 60)
+		elseif week_name == "sa" then
+			t = t + (6 * 24 * 60 * 60)
+		else
+		end
+		return os.date("%Y-%m-%d", t)
+	end
+	return nil
+end
+
 return M

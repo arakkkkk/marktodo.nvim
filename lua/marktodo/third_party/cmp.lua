@@ -95,7 +95,7 @@ local function get_cmp_date(trigger)
 		end
 		return os.date("%Y-%m-%d", t)
 	end
-	return table_cmp
+	return ""
 end
 
 ---Return whether this source is available in the current context or not (optional).

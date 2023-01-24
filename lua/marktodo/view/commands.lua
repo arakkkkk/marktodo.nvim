@@ -1,5 +1,4 @@
 local M = {}
-
 function M.create()
 	local marktodo = require("marktodo")
 	local ops = require("marktodo").ops
@@ -61,7 +60,7 @@ function M.create()
 		if not parser then
 			return
 		end
-		local priority = utils.input("Project: ")
+		local priority = utils.input("Priority: ")
 		if priority then
 			io.popen(
 				'sed -i "" -e "'
@@ -79,7 +78,7 @@ function M.create()
 		if not parser then
 			return
 		end
-		local project = utils.input("Project: ")
+		local project = utils.input("Project: +")
 		if project then
 			io.popen('sed -i "" -e "' .. parser.line_number .. "s/$/ +" .. project .. '/g" ' .. parser.file_path)
 		end
@@ -90,7 +89,12 @@ function M.create()
 		if not parser then
 			return
 		end
-		local due = utils.input("Project: ")
+		local due = utils.input("Due: ")
+		if not due then
+			return
+		elseif not due:match("%d%d%d%d%-%d%d%-%d%d") then
+			due = utils.char2date(due)
+		end
 		if due then
 			io.popen('sed -i "" -e "' .. parser.line_number .. "s/$/ due:" .. due .. '/g" ' .. parser.file_path)
 		end
