@@ -11,9 +11,9 @@ local marktodo = require("marktodo")
 local function getSortedColumns()
 	local res = {}
 	local count = 0
-	for _, _ in pairs(marktodo.ops.telescope_columns) do
+	for _, _ in pairs(marktodo.ops.columns) do
 		count = count + 1
-		for _, col_ops in pairs(marktodo.ops.telescope_columns) do
+		for _, col_ops in pairs(marktodo.ops.columns) do
 			if tostring(col_ops.order) == tostring(count) then
 				table.insert(res, col_ops)
 				break
@@ -44,7 +44,7 @@ local function getColumnWidth(parsers, col_number, max_width)
 	local width = 0
 	for _, parser in pairs(parsers) do
 		local text = createDisplayers(parser)[col_number]
-		assert(text, "Please check setup options in telescope_columns in col number" .. tostring(col_number))
+		assert(text, "Please check setup options in columns in col number" .. tostring(col_number))
 		if #text > width then
 			width = #text
 		end
@@ -55,8 +55,9 @@ local function getColumnWidth(parsers, col_number, max_width)
 	return width
 end
 
-return function(parsers, opts)
+return function(opts)
 	opts = opts or {}
+	local parsers = require("marktodo").parsers
 
 	local widths = {}
 	for col_number, v in pairs(getSortedColumns()) do

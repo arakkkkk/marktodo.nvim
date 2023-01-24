@@ -16,11 +16,12 @@ function marktodo.marktodo(root_path, filter)
 		end
 		_ = target and table.insert(parsers, parser)
 	end
-	parsers = require("marktodo.todosorter").sort(parsers)
-	-- for _, parser in pairs(parsers) do
-	-- 	print(parser.todo_line)
-	-- end
-	require("marktodo.third_party.telescope")(parsers)
+	marktodo.parsers = require("marktodo.todosorter").sort(parsers)
+	if marktodo.ops.telescope then
+		require("marktodo.third_party.telescope")()
+	else
+		require("marktodo.view.open").open()
+	end
 end
 
 function marktodo.argParser(arg)
@@ -46,11 +47,11 @@ function marktodo.argParser(arg)
 end
 
 function marktodo.setup(ops)
-	ops = ops or {}
+	ops = {}
 	marktodo.ops = require("marktodo.ops").get_ops(ops)
 
-	-- local status_ok, fault = pcall(require, "marktodo.third_party.cmp")
-	require("marktodo.third_party.cmp")
+	local status_ok, fault = pcall(require, "marktodo.third_party.cmp")
+	require("marktodo.view.open")
 
 	local mp = marktodo.ops.marktodo_patterns
 	marktodo.marktodo_pattern = mp.completion
@@ -75,6 +76,7 @@ function marktodo.setup(ops)
 		local args = marktodo.argParser(arg)
 		marktodo.marktodo(args.root_path, args.filter)
 	end, { nargs = "*" })
+
 end
 
 return marktodo

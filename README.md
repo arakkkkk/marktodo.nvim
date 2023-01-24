@@ -77,7 +77,7 @@ require("marktodo").setup({
 		project_tags = false,
 		special_keyvalue_tags = false,
 	},
-	telescope_columns = {
+	columns = {
 		{
 			label = "status",
 			order = 1,
@@ -151,3 +151,5 @@ require('cmp').setup({
 - [ ] Sort by due
 - [X] Sort by created
 - [ ] urgency
+- [ ] task window
+	- [ ] ops setup

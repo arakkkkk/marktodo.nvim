@@ -75,14 +75,15 @@ TodoParser.new = function(todo_line, file_path, line_number)
 	end
 
 	obj.getSpecialKeyvalueTags = function(self)
-		local res_table = {}
+		local keyvalue = {}
 		for match in self.description:gmatch(mdp.special_keyvalue_tags) do
-			table.insert(res_table, match)
+			local _, _, _, key, value = match:find(mdp.special_keyvalue_tags)
+			keyvalue[key] = value
 		end
 		if not mdd.special_keyvalue_tags then
 			self.description = self.description:gsub(mdp.special_keyvalue_tags, "")
 		end
-		return res_table
+		return keyvalue
 	end
 
 	return obj

@@ -16,7 +16,7 @@ CONTENTS                                          *my-awesome-plugin-contents*
 2. SETUP                                             *marktodo-setup*
 
 
-telescope_columns
+columns
 ```
 {
 	{ label = "absolute_file_path", order = 2, replacer = function(todo)
