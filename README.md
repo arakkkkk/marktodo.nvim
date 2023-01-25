@@ -175,3 +175,5 @@ require('cmp').setup({
 	- [ ] add documents
 	- [x] split window
 	- [ ] preview
+	- [ ] switch by projects
+	- [ ] 下の必要な行をそれに書き換える
