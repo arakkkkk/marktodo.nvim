@@ -118,7 +118,14 @@ end
 function source:complete(params, callback)
 	local line = vim.fn.getline(".")
 	local col = vim.fn.charcol(".")
-	local trig = string.sub(line, 1, col - 1)
+	local trig = ""
+	for char in line:gmatch(".") do
+		trig = trig .. char
+		local len = vim.fn.execute("echo strdisplaywidth('" .. trig .. "')")
+		if len == col then
+			break
+		end
+	end
 	local cb = {}
 	-- Ceckbox
 	if trig:match("- $") then
