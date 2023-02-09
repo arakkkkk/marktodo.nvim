@@ -110,7 +110,7 @@ function source:get_debug_name()
 end
 ---Return trigger characters for triggering completion (optional).
 function source:get_trigger_characters()
-	return { ".", "+", "@", "[", " ", ":" }
+	return { "+", "@", "[", " ", ":", "." }
 end
 ---Invoke completion (required).
 ---@param params cmp.SourceCompletionApiParams
@@ -121,7 +121,7 @@ function source:complete(params, callback)
 	local trig = ""
 	for char in line:gmatch(".") do
 		trig = trig .. char
-		local len = vim.fn.execute("echo strdisplaywidth('" .. trig .. "')")
+		local len = vim.fn.strdisplaywidth(trig)
 		if len == col then
 			break
 		end
@@ -143,41 +143,41 @@ function source:complete(params, callback)
 	-- Date second (Completion date)
 	elseif trig:match("- %[.%] %(.%) [%d-]+ $") then
 		table.insert(cb, { label = os.date("%Y-%m-%m") })
-	-- project
-	elseif trig:match("- %[.%] %(.%) .+ %+$") then
-		for t, _ in pairs(get_cmp_projects()) do
-			table.insert(cb, { label = t })
-		end
-	-- context
-	elseif trig:match("- %[.%] %(.%) .+ @$") then
-		for t, _ in pairs(get_cmp_contexts()) do
-			table.insert(cb, { label = t })
-		end
-	-- tag
-	elseif trig:match("- %[.%] %(.%) .+ tag:$") then
-		for t, _ in pairs(get_cmp_tags()) do
-			table.insert(cb, { label = t })
-		end
-		-- due
-		elseif trig:match("- %[.%] %(.%) .+ due:%S+$") then
-			local trig_date = trig:match(":%S+$")
-			if trig_date:match("%d+d") then
-				table.insert(cb, { label = trig_date })
-			elseif trig_date:match("^%d%d-%d%d$") then
-				table.insert(cb, { label = trig_date })
-			elseif trig_date:match("^%d%d$") then
-				table.insert(cb, { label = trig_date })
-			-- elseif
-			-- 	trig_date:match("n*su")
-			-- 	or trig_date:match("n*mo")
-			-- 	or trig_date:match("n*tu")
-			-- 	or trig_date:match("n*we")
-			-- 	or trig_date:match("n*th")
-			-- 	or trig_date:match("n*fr")
-			-- 	or trig_date:match("n*sa")
-			-- then
-			-- 	table.insert(cb, { label = trig_date })
+		-- project
+		elseif trig:match("- %[.%] %(.%) .+ %+$") then
+			for t, _ in pairs(get_cmp_projects()) do
+				table.insert(cb, { label = t })
 			end
+		-- context
+		elseif trig:match("- %[.%] %(.%) .+ @$") then
+			for t, _ in pairs(get_cmp_contexts()) do
+				table.insert(cb, { label = t })
+			end
+		-- tag
+		elseif trig:match("- %[.%] %(.%) .+ tag:$") then
+			for t, _ in pairs(get_cmp_tags()) do
+				table.insert(cb, { label = t })
+			end
+			-- due
+			elseif trig:match("- %[.%] %(.%) .+ due:%S+$") then
+				local trig_date = trig:match(":%S+$")
+				if trig_date:match("%d+d") then
+					table.insert(cb, { label = trig_date })
+				elseif trig_date:match("^%d%d-%d%d$") then
+					table.insert(cb, { label = trig_date })
+				elseif trig_date:match("^%d%d$") then
+					table.insert(cb, { label = trig_date })
+				-- elseif
+				-- 	trig_date:match("n*su")
+				-- 	or trig_date:match("n*mo")
+				-- 	or trig_date:match("n*tu")
+				-- 	or trig_date:match("n*we")
+				-- 	or trig_date:match("n*th")
+				-- 	or trig_date:match("n*fr")
+				-- 	or trig_date:match("n*sa")
+				-- then
+				-- 	table.insert(cb, { label = trig_date })
+				end
 	end
 	callback(cb)
 end
