@@ -23,7 +23,7 @@ optional
 - nvim-cmp
 - telescope.nvim
 
-## Instration
+## Instllation
 Using packer
 ```
 use({
