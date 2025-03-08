@@ -37,7 +37,8 @@ vim.api.nvim_create_autocmd("BufLeave", {
 
 function M.open(root_path, window_type)
 	marktodo.ops.root_path = root_path or marktodo.ops.default_root_path or vim.fn.getcwd()
-	marktodo.ops.root_path = marktodo.ops.root_path:gsub("^~", os.getenv("HOME"))
+	local home_path = os.getenv("HOME") or os.getenv("USERPROFILE")
+	marktodo.ops.root_path = marktodo.ops.root_path:gsub("^~", home_path)
 
 	if window_type == "right" then
 		vim.cmd("vsplit")
